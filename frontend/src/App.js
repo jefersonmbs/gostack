@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import Header from "./Components/Header";
-import uuid from 'uuid';
+
+
 
 function App(){
     const [projects, setProjects] = useState(['Back-end', 'Front-END']);
 
     function handleAddProject(){
 
-        setProjects([...projects, `Novo Projeto ${uuid()}`])
-
-        console.log(projects);
+        setProjects([...projects, `Novo Projeto ${Date.now()}`])
     }
 
     return (
