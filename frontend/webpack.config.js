@@ -1,4 +1,5 @@
 const path = require('path');
+import css from 'file.css';
 
 module.exports = {
     entry: path.resolve(__dirname, 'src', 'index.js'),
@@ -16,6 +17,12 @@ module.exports = {
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
+                }
+            },
+            {
+                test: /\.css$/,
+                use:{
+                    loader:['style-loader', 'css-loader'],
                 }
             }
         ]
