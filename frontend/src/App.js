@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import Header from "./Components/Header";
+import React, { useState , useEffect } from 'react';
+import Header from './Components/Header';
 import './App.css';
-import bg from "./assets/812062.png";
+import api from './services/api';
 
 
 function App(){
     const [projects, setProjects] = useState(['Back-end', 'Front-END']);
+
+    useEffect(() => {
+        api.get("/projects").then(response =>  {
+            console.log(response)
+        })
+    }, [])
 
     function handleAddProject(){
 
@@ -14,14 +20,14 @@ function App(){
 
     return (
        <>
-           <Header title="Projects"/>
+           <Header title='Projects'/>
 
-           <img src={bg} alt="Background"/>
+
 
             <ul>
                 {projects.map(projects => <li key={projects}>{projects}</li>)}
             </ul>
-           <button type="button" onClick={handleAddProject}>Adicionar Projeto</button>
+           <button type='button' onClick={handleAddProject}>Adicionar Projeto</button>
         </>
         );
 }
