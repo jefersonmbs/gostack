@@ -8,13 +8,19 @@ app.use(express.json())
 const projects = [];
 
 app.get("/projects", (req, res) => {
-    return res.json(projects);
+    const { title } = req.query;
+
+    console.log(title)
+
+    const result = title ? projects.filter(project => project.title.includes(title)) : projects
+
+    return res.json(result);
 })
 
 app.post("/projects", (req, res) => {
     const {title, owner} = req.body;
     const project = {
-        id: uuid(),
+        id: uuid.v4(),
         title,
         owner,
     }
@@ -23,19 +29,34 @@ app.post("/projects", (req, res) => {
 })
 app.put('/projects/:id', ((req, res) => {
     const { id } = req.params;
-    return res.json([
-        "projeto 4",
-        "projeto 2",
-        "projeto 3",
-    ])
+    const {title, owner} = req.body;
+
+
+    const projectIndex = projects.findIndex(project => project.id == id)
+
+    if(projectIndex < 0){
+        return res.status(400).json({error: 'Project not found.'})
+    }
+    const project = {
+        title,
+        owner,
+    }
+    projects[projectIndex] =  project;
+
+    return res.json(project)
 
 }))
 app.delete('/projects/:id', ((req, res) => {
         const { id } = req.params;
-        return res.json([
-            "projeto 4",
-            "projeto 2",
-        ])
+
+    const projectIndex = projects.findIndex(project => project.id == id)
+
+    if(projectIndex < 0){
+        return res.status(400).json({error: 'Project not found.'})
+    }
+    projects.splice(projectIndex, 1)
+
+    return res.json(projects);
     })
 )
 
