@@ -1,5 +1,4 @@
 const path = require('path');
-import css from 'file.css';
 
 module.exports = {
     entry: path.resolve(__dirname, 'src', 'index.js'),
@@ -21,10 +20,19 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use:{
-                    loader:['style-loader', 'css-loader'],
+                exclude: /node_modules/,
+                use:[
+                    {loader:'style-loader'},
+                    {loader:'css-loader'}
+                ]
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: {
+                    loader: 'file-loader'
                 }
             }
+
         ]
     }
 }
