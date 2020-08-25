@@ -1,16 +1,20 @@
 const express = require('express');
 const uuid = require('uuid');
+const cors = require('cors');
 
 
 const app = express();
-app.use(express.json())
+
+app.use(cors({
+    origin: 'http://localhost:8080'
+}));
+app.use(express.json());
+
 
 const projects = [];
 
 app.get("/projects", (req, res) => {
     const { title } = req.query;
-
-    console.log(title)
 
     const result = title ? projects.filter(project => project.title.includes(title)) : projects
 

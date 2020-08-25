@@ -8,7 +8,7 @@ function App(){
     const [projects, setProjects] = useState(['Back-end', 'Front-END']);
 
     useEffect(() => {
-        api.get("/projects").then(response =>  {
+        api.get('/projects').then(response =>  {
             console.log(response)
         })
     }, [])
