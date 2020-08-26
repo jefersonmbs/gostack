@@ -65,6 +65,6 @@ app.delete('/projects/:id', ((req, res) => {
 )
 
 
-app.listen(3339, () => {
+app.listen(3333, () => {
     console.log("Server on 🤖")
 })

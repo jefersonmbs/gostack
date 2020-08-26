@@ -5,27 +5,32 @@ import api from './services/api';
 
 
 function App(){
-    const [projects, setProjects] = useState(['Back-end', 'Front-END']);
+    const [projects, setProjects] = useState([]);
 
     useEffect(() => {
         api.get('/projects').then(response =>  {
-            console.log(response)
+            setProjects(response.data);
         })
     }, [])
 
-    function handleAddProject(){
+    async function handleAddProject(){
+       // setProjects([...projects, `Novo Projeto ${Date.now()}`])
+      const response = await api.post('/projects', {
+                title: `New-APP ${Date.now()}`,
+                owner: "Jeferson"
+            });
+      const project = response.data;
 
-        setProjects([...projects, `Novo Projeto ${Date.now()}`])
+      setProjects([...projects, project])
     }
 
     return (
        <>
            <Header title='Projects'/>
-
-
-
             <ul>
-                {projects.map(projects => <li key={projects}>{projects}</li>)}
+                {projects.map(projects =>
+                    <li key={projects.id}>{projects.title}</li>
+                )}
             </ul>
            <button type='button' onClick={handleAddProject}>Adicionar Projeto</button>
         </>
